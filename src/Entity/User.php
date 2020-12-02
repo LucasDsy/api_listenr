@@ -6,7 +6,11 @@ namespace App\Entity;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
-
+/**
+ * Class User
+ * @package App\Entity
+ * @ORM\Entity
+ */
 class User extends Person
 {
 
@@ -32,23 +36,17 @@ class User extends Person
 
     /**
      * @var array
-     * @ORM\ManyToMany(targetEntity="playList")
+     * @ORM\ManyToMany(targetEntity="Playlist")
      * @ORM\JoinTable(name="list_playlists")
      * List of PlayLists
      */
     private array $playlists;
 
     /**
-     * @var Music
-     * @OneToMany(targetEntity="Music")
-     */
-    private Music $listenning;
-
-    /**
      * User constructor.
      * @param string $firstname
      * @param string $lastname
-     * @param string $birthdate
+     * @param DateTimeInterface $birthdate
      * @param string $email
      * @param string $password
      */
@@ -126,9 +124,9 @@ class User extends Person
     /**
      * @return Music
      */
-    public function getListenning(): Music
+    public function getListening(): Music
     {
-        return $this->listenning;
+        return $this->listening;
     }
 
 }

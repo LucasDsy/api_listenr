@@ -5,13 +5,18 @@ namespace App\Entity;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
-
+/**
+ * Class Person
+ * @package App\Entity
+ * @ORM\Entity
+ */
 class Person
 {
 
     /**
      * @var int
-     * @ORM\Column(type='integer')
+     * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
      */
     private int $id;

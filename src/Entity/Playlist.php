@@ -5,11 +5,16 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
+/**
+ * Class Playlist
+ * @package App\Entity
+ * @ORM\Entity
+ */
 class Playlist
 {
     /**
      * @var int
+     * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
      */

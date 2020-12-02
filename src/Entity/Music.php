@@ -6,12 +6,17 @@ namespace App\Entity;
 use DateInterval;
 use Doctrine\ORM\Mapping as ORM;
 
-
+/**
+ * Class Music
+ * @package App\Entity
+ * @ORM\Entity
+ */
 class Music
 {
 
     /**
      * @var int
+     * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
      */
@@ -25,7 +30,7 @@ class Music
 
     /**
      * @var DateInterval
-     * @ORM\Column(type="timestamp")
+     * @ORM\Column(type="time")
      */
     private DateInterval $duration;
 
@@ -34,6 +39,12 @@ class Music
      * @ORM\ManyToOne(targetEntity="Artist")
      */
     private Artist $artist;
+
+    /**
+     * @var Album
+     * @ORM\ManyToOne(targetEntity="Album")
+     */
+    private Album $album;
 
     /**
      * Music constructor.
