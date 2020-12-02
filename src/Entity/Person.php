@@ -2,28 +2,42 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Class Person
+ * @package App\Entity
+ * @ORM\Entity
+ */
 class Person
 {
 
     /**
      * @var int
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
      */
-    private integer $id;
+    private int $id;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private string $firstname;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private string $lastname;
 
     /**
-     * @var \DateTimeInterface
+     * @var DateTimeInterface
+     * @ORM\Column(type="datetime_immutable")
      */
-    private \DateTimeInterface $birthdate;
+    private DateTimeInterface $birthdate;
 
     /**
      * Person constructor.
@@ -31,7 +45,7 @@ class Person
      * @param $lastname
      * @param $birthdate
      */
-    public function __construct(string $firstname, string $lastname, string $birthdate)
+    public function __construct(string $firstname, string $lastname, DateTimeInterface $birthdate)
     {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
@@ -63,9 +77,9 @@ class Person
     }
 
     /**
-     * @return \DateTimeInterface
+     * @return DateTimeInterface
      */
-    public function getBirthdate(): \DateTimeInterface
+    public function getBirthdate(): DateTimeInterface
     {
         return $this->birthdate;
     }

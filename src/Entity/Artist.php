@@ -3,11 +3,19 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class Artist
+ * @package App\Entity
+ * @ORM\Entity
+ */
 class Artist extends Person
 {
     /**
      * @var string
+     * @ORM\Column(type="string",unique=true)
      */
     private string $alias;
 
@@ -26,7 +34,7 @@ class Artist extends Person
      * @param string $birthdate
      * @param string $alias
      */
-    public function __construct(string $firstname, string $lastname, string $birthdate, string $alias)
+    public function __construct(string $firstname, string $lastname, DateTimeInterface $birthdate, string $alias)
     {
         parent::__construct($firstname, $lastname, $birthdate);
         $this->alias = $alias;
@@ -57,9 +65,9 @@ class Artist extends Person
     }
 
     /**
-     * @return \DateTimeInterface
+     * @return DateTimeInterface
      */
-    public function getBirthdate(): \DateTimeInterface
+    public function getBirthdate(): DateTimeInterface
     {
         return parent::getBirthdate();
     }

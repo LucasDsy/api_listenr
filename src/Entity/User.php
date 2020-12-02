@@ -3,46 +3,54 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class User
+ * @package App\Entity
+ * @ORM\Entity
+ */
 class User extends Person
 {
 
     /**
      * @var string
+     * @ORM\Column(type="string",unique=true)
      */
     private string $email;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private string $password;
 
     /**
      * @var array
+     * @ORM\ManyToMany(targetEntity="Music")
+     * @ORM\JoinTable(name="musics_liked")
      * List of Musics
      */
     private array $musicsLiked;
 
     /**
      * @var array
+     * @ORM\ManyToMany(targetEntity="Playlist")
+     * @ORM\JoinTable(name="list_playlists")
      * List of PlayLists
      */
     private array $playlists;
 
     /**
-     * @var Music
-     */
-    private Music $listenning;
-
-    /**
      * User constructor.
      * @param string $firstname
      * @param string $lastname
-     * @param string $birthdate
+     * @param DateTimeInterface $birthdate
      * @param string $email
      * @param string $password
      */
-    public function __construct(string $firstname, string $lastname, string $birthdate, string $email, string $password)
+    public function __construct(string $firstname, string $lastname, DateTimeInterface $birthdate, string $email, string $password)
     {
         parent::__construct($firstname, $lastname, $birthdate);
         $this->email = $email;
@@ -74,9 +82,9 @@ class User extends Person
     }
 
     /**
-     * @return \DateTimeInterface
+     * @return DateTimeInterface
      */
-    public function getBirthdate(): \DateTimeInterface
+    public function getBirthdate(): DateTimeInterface
     {
         return parent::getBirthdate();
     }
@@ -116,9 +124,9 @@ class User extends Person
     /**
      * @return Music
      */
-    public function getListenning(): Music
+    public function getListening(): Music
     {
-        return $this->listenning;
+        return $this->listening;
     }
 
 }

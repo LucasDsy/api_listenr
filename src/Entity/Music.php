@@ -3,32 +3,46 @@
 
 namespace App\Entity;
 
+use DateInterval;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class Music
+ * @package App\Entity
+ * @ORM\Entity
+ */
 class Music
 {
 
     /**
      * @var int
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
      */
-    private integer $id;
+    private int $id;
 
     /***
      * @var string
+     * @ORM\Column(type="string")
      */
     private string $name;
 
     /**
-     * @var \DateInterval
+     * @var DateInterval
+     * @ORM\Column(type="time")
      */
-    private \DateInterval $duration;
+    private DateInterval $duration;
 
     /**
      * @var Artist
+     * @ORM\ManyToOne(targetEntity="Artist")
      */
     private Artist $artist;
 
     /**
      * @var Album
+     * @ORM\ManyToOne(targetEntity="Album")
      */
     private Album $album;
 
@@ -36,10 +50,10 @@ class Music
      * Music constructor.
      * @param int $id
      * @param string $name
-     * @param \DateInterval $duration
+     * @param DateInterval $duration
      * @param Artist $artist
      */
-    public function __construct(int $id, string $name, \DateInterval $duration, Artist $artist)
+    public function __construct(int $id, string $name, DateInterval $duration, Artist $artist)
     {
         $this->id = $id;
         $this->name = $name;
@@ -64,9 +78,9 @@ class Music
     }
 
     /**
-     * @return \DateInterval
+     * @return DateInterval
      */
-    public function getDuration(): \DateInterval
+    public function getDuration(): DateInterval
     {
         return $this->duration;
     }
@@ -77,14 +91,6 @@ class Music
     public function getArtist(): Artist
     {
         return $this->artist;
-    }
-
-    /**
-     * @return Album
-     */
-    public function getAlbum(): Album
-    {
-        return $this->album;
     }
 
     /**
