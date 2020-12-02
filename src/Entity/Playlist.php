@@ -3,21 +3,28 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 
 class Playlist
 {
     /**
      * @var int
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
      */
-    private integer $id;
+    private int $id;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private string $name;
 
     /**
      * @var array
+     * @ORM\ManyToMany(targetEntity="Music")
+     * @ORM\JoinTable(name="playlist_musics")
      */
     private array $musics;
 
