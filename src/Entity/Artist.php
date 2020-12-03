@@ -11,13 +11,51 @@ use Doctrine\ORM\Mapping as ORM;
  * @package App\Entity
  * @ORM\Entity
  */
-class Artist extends Person
+class Artist
 {
+    /**
+     * @var int
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
+     */
+    private int $id;
+
     /**
      * @var string
      * @ORM\Column(type="string",unique=true)
      */
     private string $alias;
+
+    /**
+     * Artist constructor.
+     */
+    public function __construct() {}
+
+    /**
+     * Artist Factory
+     * @param $alias
+     * @return Artist
+     */
+    public static function create(string $alias)
+    {
+        $artist = new self();
+        $artist->alias = $alias;
+
+        return $artist;
+    }
+
+    /**
+     * GETTERS
+     */
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     /**
      * @return string
@@ -26,51 +64,5 @@ class Artist extends Person
     {
         return $this->alias;
     }
-
-    /**
-     * Artist constructor.
-     * @param string $firstname
-     * @param string $lastname
-     * @param string $birthdate
-     * @param string $alias
-     */
-    public function __construct(string $firstname, string $lastname, DateTimeInterface $birthdate, string $alias)
-    {
-        parent::__construct($firstname, $lastname, $birthdate);
-        $this->alias = $alias;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return parent::getId();
-    }
-
-    /**
-     * @return string
-     */
-    public function getFirstname(): string
-    {
-        return parent::getFirstname();
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastname(): string
-    {
-        return parent::getLastname();
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getBirthdate(): DateTimeInterface
-    {
-        return parent::getBirthdate();
-    }
-
 
 }

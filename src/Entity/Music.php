@@ -3,7 +3,6 @@
 
 namespace App\Entity;
 
-use DateInterval;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,17 +21,18 @@ class Music
      */
     private int $id;
 
-    /***
+    /**
      * @var string
      * @ORM\Column(type="string")
      */
-    private string $name;
+    private string $title;
 
     /**
-     * @var DateInterval
-     * @ORM\Column(type="time")
+     * @var int
+     * @ORM\Column(type="integer")
+     * Duration in seconds
      */
-    private DateInterval $duration;
+    private int $duration;
 
     /**
      * @var Artist
@@ -48,17 +48,26 @@ class Music
 
     /**
      * Music constructor.
-     * @param int $id
-     * @param string $name
-     * @param DateInterval $duration
-     * @param Artist $artist
      */
-    public function __construct(int $id, string $name, DateInterval $duration, Artist $artist)
+    public function __construct() {}
+
+    /**
+     * Music Factory
+     * @param string $title
+     * @param int $duration
+     * @param Artist $artist
+     * @param Album $album
+     * @return Music
+     */
+    public static function create(string $title, int $duration, Artist $artist, Album $album)
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->duration = $duration;
-        $this->artist = $artist;
+        $music = new self();
+        $music->title = $title;
+        $music->duration = $duration;
+        $music->artist = $artist;
+        $music->album = $album;
+
+        return $music;
     }
 
     /**
@@ -72,9 +81,9 @@ class Music
     /**
      * @return string
      */
-    public function getName(): string
+    public function getTitle(): string
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**
