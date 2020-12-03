@@ -28,10 +28,10 @@ class Album
     private string $name;
 
     /**
-     * @var DateInterval
-     * @ORM\Column(type="time")
+     * @var int
+     * @ORM\Column(type="integer")
      */
-    private DateInterval $duration;
+    private int $duration;
 
     /**
      * @var Artist
@@ -41,19 +41,24 @@ class Album
 
     /**
      * Album constructor.
-     * @param int $id
-     * @param string $name
-     * @param DateInterval $duration
-     * @param Artist $artist
-     * @param array $musics
      */
-    public function __construct(int $id, string $name, DateInterval $duration, Artist $artist, array $musics)
+    public function __construct() {}
+
+    /**
+     * Album Factory
+     * @param string $name
+     * @param int $duration
+     * @param Artist $artist
+     * @return Album
+     */
+    public static function create(string $name, int $duration, Artist $artist)
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->duration = $duration;
-        $this->artist = $artist;
-        $this->musics = $musics;
+        $album = new self();
+        $album->name = $name;
+        $album->duration = $duration;
+        $album->artist = $artist;
+
+        return $album;
     }
 
     /**

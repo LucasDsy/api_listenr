@@ -5,14 +5,29 @@ namespace App\Entity;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class User
  * @package App\Entity
  * @ORM\Entity
  */
-class User extends Person
+class User implements UserInterface
 {
+
+    /**
+     * @var int
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
+     */
+    private int $id;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string",unique=true)
+     */
+    private string $name;
 
     /**
      * @var string
@@ -44,49 +59,41 @@ class User extends Person
 
     /**
      * User constructor.
-     * @param string $firstname
-     * @param string $lastname
-     * @param DateTimeInterface $birthdate
-     * @param string $email
-     * @param string $password
      */
-    public function __construct(string $firstname, string $lastname, DateTimeInterface $birthdate, string $email, string $password)
-    {
-        parent::__construct($firstname, $lastname, $birthdate);
-        $this->email = $email;
-        $this->password = $password;
+    public function __construct() {}
+
+    /**
+     * User Factory
+     * @param string $name
+     * @param string $email
+     * @return User
+     */
+    public static function create(string $name, string $email) {
+        $user = new self();
+        $user->name = $name;
+        $user->email  = $email;
+
+        return $user;
     }
+
+    /**
+     * GETTERS
+     */
 
     /**
      * @return int
      */
     public function getId(): int
     {
-        return parent::getId();
+        return $this->id;
     }
 
     /**
      * @return string
      */
-    public function getFirstname(): string
+    public function getName(): string
     {
-        return parent::getFirstname();
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastname(): string
-    {
-        return parent::getLastname();
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getBirthdate(): DateTimeInterface
-    {
-        return parent::getBirthdate();
+        return $this->name;
     }
 
     /**
@@ -128,5 +135,74 @@ class User extends Person
     {
         return $this->listening;
     }
+
+    /**
+     * SETTERS
+     */
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+       $this->name = $name;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @param array $musicsLiked
+     */
+    public function setMusicsLiked(array $musicsLiked): void
+    {
+        $this->musicsLiked = $musicsLiked;
+    }
+
+    /**
+     * @param array $playlists
+     */
+    public function setPlaylists(array $playlists): void
+    {
+        $this->playlists = $playlists;
+    }
+
+    /**
+     * USER INTERFACE METHODS
+     */
+
+    public function getRoles()
+    {
+        return ['BASIC_USER'];
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
 
 }
