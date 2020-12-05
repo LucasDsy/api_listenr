@@ -3,7 +3,8 @@
 
 namespace App\Entity;
 
-use DateTimeInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -42,25 +43,28 @@ class User implements UserInterface
     private string $password;
 
     /**
-     * @var array
+     * @var Music[]|Collection
      * @ORM\ManyToMany(targetEntity="Music")
      * @ORM\JoinTable(name="musics_liked")
      * List of Musics
      */
-    private array $musicsLiked;
+    private Collection $musicsLiked;
 
     /**
-     * @var array
+     * @var Playlist[]|Collection
      * @ORM\ManyToMany(targetEntity="Playlist")
      * @ORM\JoinTable(name="list_playlists")
      * List of PlayLists
      */
-    private array $playlists;
+    private Collection $playlists;
 
     /**
      * User constructor.
      */
-    public function __construct() {}
+    public function __construct() {
+        $this->musicsLiked = new ArrayCollection();
+        $this->playlists = new ArrayCollection();
+    }
 
     /**
      * User Factory
@@ -113,17 +117,17 @@ class User implements UserInterface
     }
 
     /**
-     * @return array
+     * @return Collection
      */
-    public function getMusicsLiked(): array
+    public function getMusicsLiked(): Collection
     {
         return $this->musicsLiked;
     }
 
     /**
-     * @return array
+     * @return Collection
      */
-    public function getPlaylists(): array
+    public function getPlaylists(): Collection
     {
         return $this->playlists;
     }
@@ -165,22 +169,6 @@ class User implements UserInterface
     }
 
     /**
-     * @param array $musicsLiked
-     */
-    public function setMusicsLiked(array $musicsLiked): void
-    {
-        $this->musicsLiked = $musicsLiked;
-    }
-
-    /**
-     * @param array $playlists
-     */
-    public function setPlaylists(array $playlists): void
-    {
-        $this->playlists = $playlists;
-    }
-
-    /**
      * USER INTERFACE METHODS
      */
 
@@ -202,6 +190,46 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * FUNCTIONS
+     */
+
+    /**
+     * @param Playlist $playlist
+     */
+    public function playlistAdded(Playlist $playlist): void
+    {
+        if ($playlist != null && !$this->playlists->contains($playlist))
+            $this->playlists->add($playlist);
+    }
+
+    /**
+     * @param Playlist $playlist
+     */
+    public function playlistRemoved(Playlist $playlist): void
+    {
+        if ($this->playlists->contains($playlist))
+            $this->playlist->remove($playlist);
+    }
+
+    /**
+     * @param Music $music
+     */
+    public function musicLikedAdded(Music $music): void
+    {
+        if ($music != null && !$this->musicsLiked->contains($music))
+            $this->musicsLiked->add($music);
+    }
+
+    /**
+     * @param Music $music
+     */
+    public function musicLikedRemoved(Music $music): void
+    {
+        if ($this->musicsLiked->contains($music))
+            $this->musicsLiked->remove($music);
     }
 
 
