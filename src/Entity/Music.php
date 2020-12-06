@@ -4,6 +4,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class Music
@@ -24,6 +25,7 @@ class Music
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Groups({"get"})
      */
     private string $title;
 
@@ -37,6 +39,7 @@ class Music
     /**
      * @var Artist
      * @ORM\ManyToOne(targetEntity="Artist")
+     * @Groups({"get"})
      */
     private Artist $artist;
 
@@ -71,6 +74,10 @@ class Music
     }
 
     /**
+     * GETTERS
+     */
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -87,9 +94,9 @@ class Music
     }
 
     /**
-     * @return DateInterval
+     * @return integer
      */
-    public function getDuration(): DateInterval
+    public function getDuration(): int
     {
         return $this->duration;
     }
@@ -102,6 +109,33 @@ class Music
         return $this->artist;
     }
 
+    /**
+     * SETTERS
+     */
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @param int $duration
+     */
+    public function setDuration(int $duration): void
+    {
+        $this->duration = $duration;
+    }
+
+    /**
+     * @param Artist $artist
+     */
+    public function setArtist(Artist $artist): void
+    {
+        $this->artist = $artist;
+    }
     /**
      * @param Album $album
      */
